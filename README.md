@@ -40,3 +40,9 @@ O progresso (XP, lições lidas e concluídas, revisão espaçada, calibração,
 - **Artigos:** `articles/chNN.md`, com `title` e `subtitle` no cabeçalho. Títulos `## 2.1 ...` e `### 2.1.1 ...` geram âncoras (`#s2-1-1`) usadas pelos links das lições. Destaques: `> [!key]`, `> [!warn]`, `> [!lab]`, `> [!deep]`.
 - `pnpm check` valida fórmulas KaTeX, IDs, links para lições e âncoras de seção.
 - Para verificar um build sem mexer no servidor de desenvolvimento: `NEXT_DIST_DIR=.next-verify pnpm build`.
+
+## O livro (PDF) e os direitos autorais
+
+Este projeto é um material de estudo baseado em *An Introduction to Statistical Learning, with Applications in Python* (James, Witten, Hastie, Tibshirani e Taylor). Os artigos e as missões são adaptações em português escritas a partir do livro, não o texto original, e não têm vínculo com os autores nem com a editora. Quem quiser o livro completo deve obtê-lo no site oficial dos autores.
+
+O PDF **não** faz parte deste repositório. O modal de figuras abre `/livro.pdf`; para ativá-lo, baixe o PDF do livro e salve-o como `public/livro.pdf` (o arquivo é ignorado pelo git). Sem ele, o resto do app funciona normalmente e só o modal de figuras fica sem conteúdo.
