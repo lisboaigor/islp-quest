@@ -54,3 +54,38 @@ export function figureKeys(): string[] {
     return a1 - b1 || a2 - b2;
   });
 }
+
+export const LAST_PDF_PAGE = 613;
+
+/** Página impressa do livro a partir da página do arquivo PDF (o deslocamento muda ao longo do livro). */
+export function printedPage(pdf: number): number | null {
+  if (pdf < 12) return null;
+  if (pdf <= 24) return pdf - 11;
+  if (pdf <= 77) return pdf - 10;
+  if (pdf === 78) return 69;
+  if (pdf <= 208) return pdf - 9;
+  if (pdf === 209) return 201;
+  if (pdf <= 337) return pdf - 8;
+  if (pdf === 338) return 331;
+  if (pdf <= 474) return pdf - 7;
+  if (pdf === 475) return 469;
+  return pdf - 6;
+}
+
+/** Aberturas de capítulo, em páginas do arquivo PDF (conferidas no próprio livro). */
+export const PDF_CHAPTERS: { title: string; pdf: number }[] = [
+  { title: "1. Introdução", pdf: 12 },
+  { title: "2. Aprendizado estatístico", pdf: 25 },
+  { title: "3. Regressão linear", pdf: 78 },
+  { title: "4. Classificação", pdf: 144 },
+  { title: "5. Reamostragem", pdf: 209 },
+  { title: "6. Seleção e regularização", pdf: 237 },
+  { title: "7. Além da linearidade", pdf: 297 },
+  { title: "8. Métodos baseados em árvores", pdf: 338 },
+  { title: "9. Máquinas de vetores de suporte", pdf: 374 },
+  { title: "10. Deep learning", pdf: 406 },
+  { title: "11. Análise de sobrevivência", pdf: 475 },
+  { title: "12. Aprendizado não supervisionado", pdf: 509 },
+  { title: "13. Testes múltiplos", pdf: 563 },
+  { title: "Índice remissivo", pdf: 603 },
+];

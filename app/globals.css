@@ -1230,11 +1230,14 @@ pre code {
   border-bottom: 1px solid var(--grid-major);
   font-family: var(--sans);
 }
-.figbox iframe {
-  flex: 1;
-  width: 100%;
-  border: 0;
-  background: #fff;
+.figstatus {
+  position: absolute;
+  inset: auto 0 14px 0;
+  margin: 0;
+  text-align: center;
+  color: #fff;
+  font: 0.95rem var(--sans);
+  pointer-events: none;
 }
 .figfoot {
   margin: 0;
@@ -1328,5 +1331,161 @@ pre code {
 @media (max-width: 700px) {
   .type-tools {
     bottom: 92px;
+  }
+}
+
+/* O atributo hidden perde para display:grid do .scrim; o modal fica montado (com o PDF carregado) enquanto oculto. */
+.figmodal[hidden] {
+  display: none;
+}
+
+/* ——— leitor de PDF completo ——— */
+.figbox.full {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+.pdfreader {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--sans);
+}
+.pdftools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--grid-major);
+}
+.pdftools select,
+.pdftools input {
+  font: 600 0.88rem var(--sans);
+  color: var(--ink);
+  background: var(--mist);
+  border: 1.5px solid var(--grid-major);
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+.pdfpage {
+  width: 3.6rem;
+  text-align: center;
+}
+.pdfsearch {
+  width: min(16rem, 40vw);
+}
+.pdfof,
+.pdfbook,
+.pdffound {
+  font-size: 0.82rem;
+}
+.pdfsep {
+  width: 1px;
+  align-self: stretch;
+  background: var(--grid-major);
+  margin: 0 4px;
+}
+.pdfbody {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+.pdfside {
+  width: 13.5rem;
+  flex: none;
+  overflow-y: auto;
+  border-right: 1px solid var(--grid-major);
+  padding: 8px;
+  background: var(--paper);
+}
+.pdfside .seg {
+  margin-bottom: 8px;
+}
+.pdfside .seg button {
+  padding: 5px 8px;
+  font-size: 0.8rem;
+}
+.pdfchapters,
+.pdfoutline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pdfoutline ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 12px;
+}
+.pdfchapters button,
+.pdfoutline button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font: 0.88rem/1.35 var(--sans);
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.pdfchapters button:hover,
+.pdfoutline button:hover {
+  background: color-mix(in srgb, var(--hilite) 30%, transparent);
+}
+.pdfchapters button[aria-current="true"] {
+  background: var(--ink);
+  color: var(--mist);
+}
+.pdfthumbs {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+.pdfthumb {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 4px;
+  cursor: pointer;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  color: var(--graphite);
+  font: 0.75rem var(--sans);
+  min-height: 190px;
+  align-content: start;
+}
+.pdfthumb canvas {
+  background: #fff;
+  width: 120px;
+  height: 171px;
+  box-shadow: 0 1px 4px #0005;
+}
+.pdfthumb[aria-current="page"] {
+  border-color: var(--marker);
+  color: var(--ink);
+}
+.pdfwrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  background: #3b3f45;
+}
+.pdfcontainer {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+}
+@media (max-width: 700px) {
+  .pdfside {
+    position: absolute;
+    z-index: 2;
+    height: 100%;
+    box-shadow: 4px 0 14px #0006;
+  }
+  .pdfsearch {
+    width: 8rem;
   }
 }
