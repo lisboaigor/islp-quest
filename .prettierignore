@@ -1,0 +1,17 @@
+# Dependências, builds e dados locais
+node_modules
+.next
+.next-verify
+out
+build
+data
+public
+pnpm-lock.yaml
+next-env.d.ts
+
+# Gerado a partir do PDF
+lib/figures.json
+
+# Prosa e fórmulas: o Prettier poderia escapar caracteres do LaTeX
+articles
+*.md

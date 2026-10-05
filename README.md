@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ISLP Quest
 
-## Getting Started
+Plataforma de estudo gamificada para *An Introduction to Statistical Learning with Python*.
+Todo o conteúdo está em português e foi escrito a partir do livro (`../ISLP_website.pdf`).
 
-First, run the development server:
+## Rodar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm check        # valida conteúdo (IDs, fórmulas KaTeX), tipos e lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como o estudo funciona
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Mapa:** cada ponto é uma lição; a curva se ajusta aos pontos que você concluiu.
+- **Lição:** palpite → blocos curtos de explicação (um por vez) → desafios para o **seu caderno** → caça ao erro → cartas.
+- **Caderno:** o app diz o que resolver, você resolve à mão, informa sua confiança, vê a solução e confere por marcos.
+  O que faltar volta na **revisão espaçada** (caixas de Leitner, capítulos misturados).
+- **Energia:** pouca / normal / hiperfoco ajusta a quantidade de conteúdo da lição.
+- **Chefão** ao fim de cada capítulo: desafios misturados, sem dicas.
+- **Ideia solta:** anota uma tangente sem sair da tarefa.
+- **Leitura:** `/ler` tem um artigo por capítulo, escrito em português simples para ler na tela (estilo Substack/Medium): resumo em uma frase, intuição antes da fórmula, destaques de cuidado, caixas "Para o caderno" ligadas às missões e vocabulário no fim. Cada lição liga ao trecho certo do artigo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Onde ficam os dados
 
-## Learn More
+O progresso (XP, lições lidas e concluídas, revisão espaçada, calibração, dias estudados, ideias soltas) fica num banco **SQLite** em `data/islp.db` (fora do git), acessado pela rota `/api/state`.
 
-To learn more about Next.js, take a look at the following resources:
+- Usa o `node:sqlite` embutido no Node (22.5 ou mais novo; sem dependência nativa).
+- Para usar outro arquivo: `ISLP_DB=/caminho/progresso.db pnpm dev`.
+- O `localStorage` do navegador funciona só como cache. Na primeira abertura com o banco vazio, o progresso que já estava no navegador é migrado para o banco. Se banco e navegador divergirem, vale o banco, e a versão do navegador fica em `islp-quest-v2-backup`.
+- **Backup:** copie `data/islp.db` (e `islp.db-wal` / `islp.db-shm`, se existirem) com o servidor parado.
+- **Zerar:** pare o servidor, apague `data/`, e limpe os dados do site no navegador (senão o cache reenvia o progresso antigo).
+- A rota só aceita escrita da própria origem e não tem login: use em `localhost`, sem expor na rede.
+- O tamanho do texto de leitura fica em `localStorage` (`islp-reading-size`), por navegador.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Adicionar conteúdo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Missões:** `content/chNN.ts` (tipos em `lib/types.ts`), registradas em `content/index.ts`.
+- **Artigos:** `articles/chNN.md`, com `title` e `subtitle` no cabeçalho. Títulos `## 2.1 ...` e `### 2.1.1 ...` geram âncoras (`#s2-1-1`) usadas pelos links das lições. Destaques: `> [!key]`, `> [!warn]`, `> [!lab]`, `> [!deep]`.
+- `pnpm check` valida fórmulas KaTeX, IDs, links para lições e âncoras de seção.
+- Para verificar um build sem mexer no servidor de desenvolvimento: `NEXT_DIST_DIR=.next-verify pnpm build`.
